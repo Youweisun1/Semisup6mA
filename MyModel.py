@@ -29,15 +29,15 @@ class Semisup6mA(nn.Module):
             nn.Dropout(0.1)
         )
 
-        # 改进后的pwm处理层
+    
         self.posweight = nn.Sequential(
             nn.Conv1d(4, 32, 5, 1, 2),
             nn.ReLU(),
             nn.Dropout(0.1),
-            nn.AdaptiveAvgPool1d(41)  # 假设序列长度为1000
+            nn.AdaptiveAvgPool1d(41)  
         )
         self.trans = Transformer(1, 41, 4, 100, 400, 64)
-        self.out = nn.Linear(2624, 1024)  # fully connected layer, output 10 classes　　　
+        self.out = nn.Linear(2624, 1024)  # fully connected layer, output 2 classes　　　
         self.block1 = nn.Sequential(nn.Linear(1024, 256),
                                     nn.BatchNorm1d(256),
                                     nn.LeakyReLU(),
@@ -71,6 +71,7 @@ class Semisup6mA(nn.Module):
         # with torch.no_grad():
         output = self.forward(x,xpos)
         return self.block2(output)
+
 
 
 
